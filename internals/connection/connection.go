@@ -1,6 +1,7 @@
 package connection
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"time"
@@ -10,6 +11,7 @@ type Connection interface{}
 
 type connection struct {
 	SQL *sql.DB
+	ctx context.Context
 }
 
 const (
@@ -18,13 +20,14 @@ const (
 	maxLifeDBTime = 5 * time.Minute
 )
 
-func NewConnection(dbString, dsn string) Connection {
+func NewConnection(dbString, dsn string, ctx context.Context) Connection {
 	db, err := newDatabase(dbString, dsn)
 	if err != nil {
 		log.Fatal("DB error: ", err)
 	}
 	return &connection{
 		SQL: db,
+		ctx: ctx,
 	}
 }
 

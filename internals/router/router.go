@@ -9,8 +9,22 @@ import (
 	"github.com/ishanshre/gomerce/internals/config"
 )
 
+type Router interface{}
+
+type ChiRouter struct {
+	router *chi.Mux
+	app    *config.AppConfig
+}
+
+func NewChiRouter(app *config.AppConfig) Router {
+	return &ChiRouter{
+		router: chi.NewRouter(),
+		app:    app,
+	}
+}
+
 // All the routes for the api or web lies here
-func Router(app *config.AppConfig) http.Handler {
+func (r *ChiRouter) Router(app *config.AppConfig) http.Handler {
 	router := chi.NewRouter()
 	router.Use(cors.Handler((cors.Options{
 		AllowedOrigins:   []string{"http://*", "https://*"},

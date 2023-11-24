@@ -1,6 +1,7 @@
 package dbrepo
 
 import (
+	"context"
 	"database/sql"
 
 	"github.com/ishanshre/gomerce/internals/config"
@@ -10,11 +11,13 @@ import (
 type postgresDBRepo struct {
 	App *config.AppConfig
 	DB  *sql.DB
+	Ctx context.Context
 }
 
-func NewPostgresRepo(conn *sql.DB, a *config.AppConfig) repository.Repository {
+func NewPostgresRepo(conn *sql.DB, a *config.AppConfig, ctx context.Context) repository.Repository {
 	return &postgresDBRepo{
 		App: a,
 		DB:  conn,
+		Ctx: ctx,
 	}
 }
