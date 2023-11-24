@@ -23,4 +23,7 @@ type AppConfig struct {
 	ContactEmail  string
 	Addr          string
 	Port          int
+	DbString      string
+	Dsn           string
+	RedisHost     string
 }

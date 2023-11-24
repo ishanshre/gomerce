@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-type Connection interface{}
+type Connection interface {
+	CloseDb()
+}
 
 type connection struct {
 	SQL *sql.DB
@@ -43,4 +45,8 @@ func newDatabase(dbString, dsn string) (*sql.DB, error) {
 	db.SetMaxIdleConns(maxIdleDBConn)
 	db.SetConnMaxLifetime(maxLifeDBTime)
 	return db, err
+}
+
+func (conn *connection) CloseDb() {
+	defer conn.SQL.Close()
 }
