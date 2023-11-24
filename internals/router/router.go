@@ -7,24 +7,11 @@ import (
 	chi_middlewares "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/ishanshre/gomerce/internals/config"
+	"github.com/ishanshre/gomerce/internals/handler"
+	"github.com/ishanshre/gomerce/internals/middleware"
 )
 
-type Router interface{}
-
-type ChiRouter struct {
-	router *chi.Mux
-	app    *config.AppConfig
-}
-
-func NewChiRouter(app *config.AppConfig) Router {
-	return &ChiRouter{
-		router: chi.NewRouter(),
-		app:    app,
-	}
-}
-
-// All the routes for the api or web lies here
-func (r *ChiRouter) Router(app *config.AppConfig) http.Handler {
+func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) http.Handler {
 	router := chi.NewRouter()
 	router.Use(cors.Handler((cors.Options{
 		AllowedOrigins:   []string{"http://*", "https://*"},
