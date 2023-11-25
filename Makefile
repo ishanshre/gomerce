@@ -5,13 +5,13 @@ include .env
 DB_URL=postgresql://${db_username}:${db_password}@localhost:5432/${db_dbname}?sslmode=disable
 
 run:
-	go run ./cmd/api
+	go run ./cmd/web
 
 help:
-	go run ./cmd/api -h
+	go run ./cmd/web -h
 
 createDBContainer:
-	docker run --name gomerce -e POSTGRES_USER=${db_username} -e POSTGRES_PASSWORD=${db_password} -p 5432:5432 -v postgres_data:/var/lib/postgresql/data -d postgres
+	docker run --name gomerce -e POSTGRES_USER=${db_username} -e POSTGRES_PASSWORD=${db_password} -p 5432:5432 -v ./postgres_data:/var/lib/postgresql/data -d postgres
 
 createDBPGadmin4Container:
 	docker run --name gomercePgadmin -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@admin.com' -e 'PGADMIN_DEFAULT_PASSWORD=admin' -d dpage/pgadmin4
