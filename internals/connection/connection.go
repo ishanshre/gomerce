@@ -51,7 +51,7 @@ func newDatabase(dbString, dsn string) (*sql.DB, error) {
 }
 
 func (conn *connection) CloseDb() {
-	defer conn.SQL.Close()
+	conn.SQL.Close()
 }
 
 func (conn *connection) GetDB() *sql.DB {

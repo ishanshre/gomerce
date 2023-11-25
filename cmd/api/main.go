@@ -36,7 +36,7 @@ func main() {
 
 	handler, middleware, connection := run(&app, context.Background())
 
-	connection.CloseDb()
+	defer connection.CloseDb()
 
 	srv := http.Server{
 		Addr:    app.Addr,
