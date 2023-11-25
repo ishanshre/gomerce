@@ -20,10 +20,10 @@ createRedisContainer:
 	docker run -d --name gomerceRedis -p 6379:6379 redis:latest 
 
 startContainer:
-	docker start gomercePlatform gomercePgadmin gomerceRedis
+	docker start gomerce gomercePgadmin gomerceRedis
 
 stopContainer:
-	docker stop gomercePlatform gomercePgadmin gomerceRedis
+	docker stop gomerce gomercePgadmin gomerceRedis
 	
 migrateUp: 
 	migrate -path migrations -database "${DB_URL}" -verbose up

@@ -2,5 +2,7 @@ db_username=your database username
 db_password=your database password
 db_dbname=your database name
 driver=database driver string
-postgres="user=database_username password=database_password dbname=name_of_database sslmode=disable"
+
+DB_URL=postgresql://username:password@postgres:5432/databasename?sslmode=disable
+# postgres="user=database_username password=database_password dbname=name_of_database sslmode=disable"
 test="user=database_username password=database_password dbname=name_of_database sslmode=disable"

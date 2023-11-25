@@ -14,6 +14,8 @@ import (
 // interface for handler
 type Handler interface {
 	PostCategoryHandler(w http.ResponseWriter, r *http.Request)
+	GetCategoriesHandler(w http.ResponseWriter, r *http.Request)
+	GetCategoryHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // handler struct
