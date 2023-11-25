@@ -10,7 +10,7 @@ func (r *postgresDBRepo) CreateCategory(name string) (*model.Category, error) {
 	ctx, cancel := context.WithTimeout(r.Ctx, timeout)
 	defer cancel()
 	category := &model.Category{}
-	query := `INSERT INTO categories (name) VALUES $1 RETURNING id, name;`
+	query := `INSERT INTO categories (name) VALUES ($1) RETURNING id, name;`
 	if err := r.DB.GetDB().QueryRowContext(ctx, query, name).Scan(
 		&category.Id,
 		&category.Name,

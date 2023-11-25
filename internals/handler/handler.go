@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"net/http"
 
 	validators "github.com/go-playground/validator"
 	"github.com/ishanshre/gomerce/internals/config"
@@ -11,7 +12,9 @@ import (
 )
 
 // interface for handler
-type Handler interface{}
+type Handler interface {
+	PostCategoryHandler(w http.ResponseWriter, r *http.Request)
+}
 
 // handler struct
 type handler struct {
