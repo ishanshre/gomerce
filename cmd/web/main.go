@@ -30,7 +30,7 @@ func main() {
 	flag.Parse()
 
 	app.DbString = os.Getenv("driver")
-	app.Dsn = os.Getenv("postgres")
+	app.Dsn = os.Getenv("DB_URL")
 	// app.RedisHost = os.Getenv("redis")
 	app.Addr = fmt.Sprintf(":%d", app.Port)
 
