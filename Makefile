@@ -11,7 +11,7 @@ help:
 	go run ./cmd/api -h
 
 createDBContainer:
-	docker run --name gomerce -e POSTGRES_USER=${db_username} -e POSTGRES_PASSWORD=${db_password} -p 5432:5432 -d postgres
+	docker run --name gomerce -e POSTGRES_USER=${db_username} -e POSTGRES_PASSWORD=${db_password} -p 5432:5432 -v postgres_data:/var/lib/postgresql/data -d postgres
 
 createDBPGadmin4Container:
 	docker run --name gomercePgadmin -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@admin.com' -e 'PGADMIN_DEFAULT_PASSWORD=admin' -d dpage/pgadmin4
