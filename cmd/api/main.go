@@ -26,17 +26,18 @@ func main() {
 	if err := godotenv.Load(".env"); err != nil {
 		log.Printf("Error in loading environment files: %s\n", err.Error())
 	}
-	app.DbString = os.Getenv("postgres")
-	app.Dsn = os.Getenv("DB_URL")
-	app.RedisHost = os.Getenv("redis")
 	flag.IntVar(&app.Port, "port", 8000, "Port for server to listen to")
 	flag.Parse()
+
+	app.DbString = os.Getenv("driver")
+	app.Dsn = os.Getenv("postgres")
+	// app.RedisHost = os.Getenv("redis")
+	app.Addr = fmt.Sprintf(":%d", app.Port)
 
 	handler, middleware, connection := run(&app, context.Background())
 
 	connection.CloseDb()
 
-	app.Addr = fmt.Sprintf(":%d", app.Port)
 	srv := http.Server{
 		Addr:    app.Addr,
 		Handler: router.Router(&app, handler, middleware),
