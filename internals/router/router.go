@@ -22,5 +22,9 @@ func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) h
 		MaxAge:           300,
 	})))
 	router.Use(chi_middlewares.Logger)
+
+	router.Route("/api/v1", func(router chi.Router) {
+		router.Post("/category", h.PostCategoryHandler)
+	})
 	return router
 }

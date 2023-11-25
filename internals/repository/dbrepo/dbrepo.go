@@ -2,6 +2,7 @@ package dbrepo
 
 import (
 	"context"
+	"time"
 
 	"github.com/ishanshre/gomerce/internals/config"
 	"github.com/ishanshre/gomerce/internals/connection"
@@ -21,3 +22,5 @@ func NewPostgresRepo(conn connection.Connection, a *config.AppConfig, ctx contex
 		Ctx: ctx,
 	}
 }
+
+var timeout = 3 * time.Second

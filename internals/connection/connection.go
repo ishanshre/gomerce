@@ -11,6 +11,7 @@ import (
 
 type Connection interface {
 	CloseDb()
+	GetDB() *sql.DB
 }
 
 type connection struct {
@@ -50,5 +51,9 @@ func newDatabase(dbString, dsn string) (*sql.DB, error) {
 }
 
 func (conn *connection) CloseDb() {
-	defer conn.SQL.Close()
+	conn.SQL.Close()
+}
+
+func (conn *connection) GetDB() *sql.DB {
+	return conn.SQL
 }
