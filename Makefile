@@ -7,6 +7,9 @@ DB_URL=postgresql://${db_username}:${db_password}@localhost:5432/${db_dbname}?ss
 run:
 	go run ./cmd/web
 
+hotRun:
+	${GO_PATH}/CompileDaemon -build="go build -o web cmd/web/main.go" -color -command="./web"
+
 help:
 	go run ./cmd/web -h
 
@@ -36,3 +39,6 @@ migrateForce:
 
 migrateCreate:
 	migrate create -ext sql -dir migrations -seq $(fileName)
+
+installCompileDaemon:
+	go install github.com/githubnemo/CompileDaemon@latest

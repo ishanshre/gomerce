@@ -46,3 +46,16 @@ func (h *handler) GetCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	helpers.StatusOk(w, category)
 }
+
+func (h *handler) DeleteCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.StatusBadRequest(w, err.Error())
+		return
+	}
+	if err := h.repo.DeleteCategory(id); err != nil {
+		helpers.StatusInternalServerError(w, err.Error())
+		return
+	}
+	helpers.StatusOk(w, "category deleted")
+}

@@ -10,3 +10,5 @@ driver=database driver string
 # DB_URL=postgresql://username:password@postgres:5432/databasename?sslmode=disable
 DB_URL="user=database_username password=database_password dbname=name_of_database sslmode=disable"
 test="user=database_username password=database_password dbname=name_of_database sslmode=disable"
+
+GO_PATH=your go path
