@@ -15,7 +15,7 @@ func WriteJson(w http.ResponseWriter, status int, data any) {
 
 type Message struct {
 	Message string `json:"message,omitempty"`
-	Data    any    `json:"data.omitempty"`
+	Data    any    `json:"data,omitempty"`
 }
 
 func StatusInternalServerError(w http.ResponseWriter, message string) {
@@ -42,8 +42,8 @@ func StatusNotFound(w http.ResponseWriter, message string) {
 	})
 }
 
-func StatusOk(w http.ResponseWriter, message string) {
+func StatusOk(w http.ResponseWriter, data any) {
 	WriteJson(w, http.StatusOK, Message{
-		Message: message,
+		Data: data,
 	})
 }
