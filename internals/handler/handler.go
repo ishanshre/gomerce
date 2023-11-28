@@ -17,6 +17,7 @@ type Handler interface {
 	GetCategoriesHandler(w http.ResponseWriter, r *http.Request)
 	GetCategoryHandler(w http.ResponseWriter, r *http.Request)
 	DeleteCategoryHandler(w http.ResponseWriter, r *http.Request)
+	UpdateCategoryHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // handler struct

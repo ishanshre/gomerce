@@ -28,6 +28,7 @@ func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) h
 		router.Get("/category", h.GetCategoriesHandler)
 		router.Get("/category/{id}", h.GetCategoryHandler)
 		router.Delete("/category/{id}", h.DeleteCategoryHandler)
+		router.Put("/category/{id}", h.UpdateCategoryHandler)
 	})
 	return router
 }
