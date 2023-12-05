@@ -25,3 +25,17 @@ type Product struct {
 	CreatedAt       time.Time `json:"created_at"`
 	UpdatedAt       time.Time `json:"updated_at"`
 }
+
+type ProductNoID struct {
+	Name            string    `json:"name"`
+	Description     string    `json:"description"`
+	Brand           string    `json:"brand"`
+	Sku             string    `json:"sku"`
+	InStock         bool      `json:"in_stock"`
+	Image           string    `json:"image"`
+	Price           float64   `json:"price"`
+	DiscountedPrice float64   `json:"discounted_price"`
+	CategoryId      int       `json:"category_id"`
+	CreatedAt       time.Time `json:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at"`
+}
