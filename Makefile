@@ -8,7 +8,7 @@ run:
 	go run ./cmd/web
 
 hotRun:
-	${GO_PATH}/CompileDaemon -build="go build -o web cmd/web/main.go" -color -command="./web"
+	${GO_PATH}/CompileDaemon -build="go build -o application cmd/web/main.go" -color -command="./application"
 
 help:
 	go run ./cmd/web -h

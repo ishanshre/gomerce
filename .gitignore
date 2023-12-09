@@ -20,6 +20,5 @@
 # Go workspace file
 go.work
 
-web
-api
+application
 postgres_data
