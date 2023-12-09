@@ -7,6 +7,8 @@ import (
 	validators "github.com/go-playground/validator"
 	"github.com/ishanshre/gomerce/internals/config"
 	"github.com/ishanshre/gomerce/internals/connection"
+	"github.com/ishanshre/gomerce/internals/model"
+	"github.com/ishanshre/gomerce/internals/render"
 	"github.com/ishanshre/gomerce/internals/repository"
 	"github.com/ishanshre/gomerce/internals/validator"
 )
@@ -18,6 +20,8 @@ type Handler interface {
 	GetCategoryHandler(w http.ResponseWriter, r *http.Request)
 	DeleteCategoryHandler(w http.ResponseWriter, r *http.Request)
 	UpdateCategoryHandler(w http.ResponseWriter, r *http.Request)
+
+	HomePageHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // handler struct
@@ -43,4 +47,8 @@ func NewHandler(app *config.AppConfig, repo repository.Repository, conn connecti
 		conn: conn,
 		ctx:  ctx,
 	}
+}
+
+func (h *handler) HomePageHandler(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "home.page.tmpl", &model.TemplateData{})
 }

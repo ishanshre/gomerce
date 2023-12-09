@@ -21,7 +21,12 @@ func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) h
 		AllowCredentials: true,
 		MaxAge:           300,
 	})))
+	router.Use(m.SessionLoad) // load the session middleware
+	router.Use(m.NoSurf)      // csrf middleware
 	router.Use(chi_middlewares.Logger)
+
+	static_file_server := http.FileServer(http.Dir("./static/"))
+	router.Handle("/static/*", http.StripPrefix("/static", static_file_server))
 
 	router.Route("/api/v1", func(router chi.Router) {
 		router.Post("/category", h.PostCategoryHandler)
@@ -30,5 +35,7 @@ func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) h
 		router.Delete("/category/{id}", h.DeleteCategoryHandler)
 		router.Put("/category/{id}", h.UpdateCategoryHandler)
 	})
+
+	router.Get("/", h.HomePageHandler)
 	return router
 }

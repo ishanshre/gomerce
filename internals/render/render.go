@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+	"text/template"
 	"time"
 
 	"github.com/ishanshre/gomerce/internals/config"

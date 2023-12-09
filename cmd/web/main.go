@@ -7,17 +7,22 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/ishanshre/gomerce/internals/config"
 	"github.com/ishanshre/gomerce/internals/connection"
 	"github.com/ishanshre/gomerce/internals/handler"
 	"github.com/ishanshre/gomerce/internals/middleware"
+	"github.com/ishanshre/gomerce/internals/render"
 	"github.com/ishanshre/gomerce/internals/repository/dbrepo"
 	"github.com/ishanshre/gomerce/internals/router"
 	"github.com/joho/godotenv"
 )
 
 var app config.AppConfig
+
+var session *scs.SessionManager
 
 var infoLog *log.Logger
 var errorLog *log.Logger
@@ -34,7 +39,10 @@ func main() {
 	// app.RedisHost = os.Getenv("redis")
 	app.Addr = fmt.Sprintf(":%d", app.Port)
 
-	handler, middleware, connection := run(&app, context.Background())
+	handler, middleware, connection, err := run(&app, context.Background())
+	if err != nil {
+		app.ErrorLog.Println(err)
+	}
 
 	defer connection.CloseDb()
 
@@ -48,7 +56,7 @@ func main() {
 	}
 }
 
-func run(app *config.AppConfig, ctx context.Context) (handler.Handler, middleware.Middleware, connection.Connection) {
+func run(app *config.AppConfig, ctx context.Context) (handler.Handler, middleware.Middleware, connection.Connection, error) {
 	app.InProduction = false
 	app.UseCache = false
 	app.UseRedis = false
@@ -59,6 +67,24 @@ func run(app *config.AppConfig, ctx context.Context) (handler.Handler, middlewar
 	app.InfoLog = infoLog
 	app.ErrorLog = errorLog
 
+	app.ContactEmail = "admin@gomerce.com"
+
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
+	app.Session = session
+
+	tc, err := render.CreateTemplateCache()
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	app.TemplateCache = tc
+
+	render.NewRenderer(app)
+
 	conn := connection.NewConnection(app.DbString, app.Dsn, ctx)
 
 	repo := dbrepo.NewPostgresRepo(conn, app, ctx)
@@ -67,5 +93,5 @@ func run(app *config.AppConfig, ctx context.Context) (handler.Handler, middlewar
 
 	middleware := middleware.NewMiddleware(app, ctx)
 
-	return handler, middleware, conn
+	return handler, middleware, conn, nil
 }
