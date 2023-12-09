@@ -9,6 +9,7 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/joho/godotenv v1.5.1
+	github.com/justinas/nosurf v1.1.1
 	github.com/lib/pq v1.10.9
 )
 
