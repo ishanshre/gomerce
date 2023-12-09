@@ -47,3 +47,7 @@ func StatusOk(w http.ResponseWriter, data any) {
 		Data: data,
 	})
 }
+
+func StatusNoContent(w http.ResponseWriter) {
+	WriteJson(w, http.StatusNoContent, nil)
+}

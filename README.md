@@ -1,2 +1,2 @@
 # gomerce
-An ecommerce api in golang
+A simple ecommerce in golang
