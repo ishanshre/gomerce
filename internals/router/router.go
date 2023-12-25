@@ -36,6 +36,7 @@ func Router(app *config.AppConfig, h handler.Handler, m middleware.Middleware) h
 		router.Put("/category/{id}", h.UpdateCategoryHandler)
 	})
 
+	router.Get("/admin/", h.AdminPageHandler)
 	router.Get("/", h.HomePageHandler)
 	return router
 }

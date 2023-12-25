@@ -21,6 +21,7 @@ type Handler interface {
 	DeleteCategoryHandler(w http.ResponseWriter, r *http.Request)
 	UpdateCategoryHandler(w http.ResponseWriter, r *http.Request)
 
+	AdminPageHandler(w http.ResponseWriter, r *http.Request)
 	HomePageHandler(w http.ResponseWriter, r *http.Request)
 }
 
@@ -47,6 +48,10 @@ func NewHandler(app *config.AppConfig, repo repository.Repository, conn connecti
 		conn: conn,
 		ctx:  ctx,
 	}
+}
+
+func (h *handler) AdminPageHandler(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin.page.tmpl", &model.TemplateData{})
 }
 
 func (h *handler) HomePageHandler(w http.ResponseWriter, r *http.Request) {
